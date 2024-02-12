@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
 
-@export var speed : float = 200.0
-@export var jump_velocity : float = -150
-@export var double_jump_velocity : float = -100
+@export var max_speed : float = 200.0
+@export var speed_mult : float = 10.0
+@export var jump_velocity : float = -200
+@export var double_jump_velocity : float = -200
 
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
@@ -13,6 +14,8 @@ var has_double_jumped : bool = false
 var animation_locked : bool = false
 var direction : Vector2 = Vector2.ZERO
 var was_in_air : bool = false
+var prev_wall_normal : Vector2 = Vector2.ZERO
+var direction_lock : bool = false
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -21,16 +24,21 @@ func _physics_process(delta):
 		was_in_air = true
 	else:
 		has_double_jumped = false
+		direction_lock = false
+		prev_wall_normal = Vector2.ZERO
 		
 		if was_in_air:
 			land()
 			was_in_air = false
+		
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
 #			# Normal Jump
 			jump()
+		elif is_on_wall():
+			wall_jump()
 		elif not has_double_jumped:
 			# Double Jump
 			double_jump()
@@ -39,9 +47,9 @@ func _physics_process(delta):
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	direction = Input.get_vector("left", "right", "up", "down")
 	if direction.x != 0 && animated_sprite.animation != "jump_end":
-		velocity.x = direction.x * speed
+		velocity.x = max(min(direction.x * speed_mult + velocity.x,max_speed),-max_speed)
 	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.x = move_toward(velocity.x, 0, max_speed)
 	
 	move_and_slide()
 	update_facing_direction()
@@ -57,10 +65,11 @@ func update_animation():
 			else:
 				animated_sprite.play("idle")
 func update_facing_direction():
-	if direction.x > 0:
-		animated_sprite.flip_h = false
-	elif direction.x < 0:
-		animated_sprite.flip_h = true
+	if not direction_lock:
+		if direction.x > 0:
+			animated_sprite.flip_h = false
+		elif direction.x < 0:
+			animated_sprite.flip_h = true
 		
 func jump():
 	velocity.y = jump_velocity
@@ -72,12 +81,25 @@ func double_jump():
 	animated_sprite.play("jump_double")
 	animation_locked = true
 	has_double_jumped = true
+	prev_wall_normal = Vector2.ZERO
+	direction_lock = false
+	
+func wall_jump():
+	
+	var wall_velocity = get_wall_normal()
+	if wall_velocity != prev_wall_normal:
+		direction_lock = false
+		velocity.y = double_jump_velocity
+		velocity.x = wall_velocity.x * max_speed
+		direction.x = velocity.x
+		update_facing_direction()
+		direction_lock = true
+		prev_wall_normal = wall_velocity
+	
 	
 func land():
 	animated_sprite.play("jump_end")
 	animation_locked = true
-	
-
 
 func _on_animated_sprite_2d_animation_finished():
 	if(["jump_end","jump_start","jump_double"].has(animated_sprite.animation)):
