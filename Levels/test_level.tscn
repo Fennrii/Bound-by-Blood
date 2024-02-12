@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ynoxbmq3q4su"]
+[gd_scene load_steps=6 format=3 uid="uid://ynoxbmq3q4su"]
 
 [ext_resource type="Texture2D" uid="uid://ijwjacrargad" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_t6yaq"]
 [ext_resource type="PackedScene" uid="uid://qg1it1xna531" path="res://Characters/player.tscn" id="2_4wbt7"]
+[ext_resource type="PackedScene" uid="uid://cy7qvq37238dl" path="res://Characters/enemy.tscn" id="3_560h4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hn0ou"]
 texture = ExtResource("1_t6yaq")
@@ -1442,3 +1443,6 @@ process_callback = 0
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("3_560h4")]
+position = Vector2(102, 23)

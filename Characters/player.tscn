@@ -379,7 +379,7 @@ script = ExtResource("1_o4aox")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_316ng")
-animation = &"jump_double"
+animation = &"idle"
 autoplay = "idle"
 centered = false
 offset = Vector2(-32, -40)
