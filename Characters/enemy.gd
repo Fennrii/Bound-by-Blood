@@ -43,3 +43,7 @@ func update_facing_direction():
 		animated_sprite.flip_h = false
 	elif direction.x < 0:
 		animated_sprite.flip_h = true
+
+func _on_body_entered(body):
+	if body.is_in_group("Player"):
+		print("Player Hit")
