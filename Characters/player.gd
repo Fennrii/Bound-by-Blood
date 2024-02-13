@@ -38,7 +38,9 @@ func _physics_process(delta):
 	
 # Collision logic
 	for i in get_slide_collision_count():
-		if get_slide_collision(i).get_collider().name.contains("Chest"):
+		if get_slide_collision(i).get_collider() == null:
+			pass
+		elif get_slide_collision(i).get_collider().name.contains("Chest"):
 			add_inv_item(get_slide_collision(i).get_collider())
 		elif get_slide_collision(i).get_collider().name.contains("Enemy"):
 			enemy_hit(get_slide_collision(i).get_collider())
