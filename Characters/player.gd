@@ -36,7 +36,7 @@ func _physics_process(delta):
 			land()
 			was_in_air = false
 	
-	
+# Collision logic
 	for i in get_slide_collision_count():
 		if get_slide_collision(i).get_collider().name.contains("Chest"):
 			add_inv_item(get_slide_collision(i).get_collider())
@@ -116,7 +116,8 @@ func land():
 func _on_animated_sprite_2d_animation_finished():
 	if(["jump_end","jump_start","jump_double"].has(animated_sprite.animation)):
 		animation_locked = false
-		
+
+# can randomly be assigned either 1 of 20 cards or 1 of 3 items/powerups
 func add_inv_item(object : Object):	
 	var newItem = object.open_chest()
 	if newItem != null:
@@ -126,6 +127,7 @@ func add_inv_item(object : Object):
 		else:
 			find_child("HUD").show_message("You Found an Item!")
 	
+# TODO: Add connecter to battle scene
 func enemy_hit(object : Object):
 	print("Enemy on-hit")
 	object.free()
