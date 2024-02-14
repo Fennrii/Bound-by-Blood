@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://cy7qvq37238dl"]
+[gd_scene load_steps=24 format=3 uid="uid://cy7qvq37238dl"]
 
 [ext_resource type="Script" path="res://Characters/enemy.gd" id="1_oa3wl"]
 [ext_resource type="Texture2D" uid="uid://c65uqq22p0wa4" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Mob/Boar/Idle/Idle-Sheet.png" id="2_lxgx2"]
@@ -138,6 +138,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_0s7gy"]
+points = PackedVector2Array(0, 0, -200, -47.055, -200, 13.49)
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_oa3wl")
 
@@ -153,3 +156,8 @@ frame_progress = 0.949978
 
 [node name="FloorRay" type="RayCast2D" parent="."]
 target_position = Vector2(-39, 21)
+
+[node name="PlayerChecker" type="ShapeCast2D" parent="."]
+position = Vector2(-11, 4)
+shape = SubResource("ConvexPolygonShape2D_0s7gy")
+target_position = Vector2(0, 0)

@@ -1545,7 +1545,16 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="Enemy" parent="." instance=ExtResource("3_560h4")]
-position = Vector2(251, -28)
+position = Vector2(231, -26)
 
 [node name="Chest" parent="." instance=ExtResource("4_ludrt")]
 position = Vector2(57, -23)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_560h4")]
+position = Vector2(468, 64)
+
+[node name="Enemy3" parent="." instance=ExtResource("3_560h4")]
+position = Vector2(558, -44)
+
+[node name="Enemy4" parent="." instance=ExtResource("3_560h4")]
+position = Vector2(249, -142)

@@ -42,8 +42,6 @@ func _physics_process(delta):
 			pass
 		elif get_slide_collision(i).get_collider().name.contains("Chest"):
 			add_inv_item(get_slide_collision(i).get_collider())
-		elif get_slide_collision(i).get_collider().name.contains("Enemy"):
-			enemy_hit(get_slide_collision(i).get_collider())
 		
 
 	# Handle jump.
@@ -129,8 +127,5 @@ func add_inv_item(object : Object):
 		else:
 			find_child("HUD").show_message("You Found an Item!")
 	
-# TODO: Add connecter to battle scene
-func enemy_hit(object : Object):
-	print("Enemy on-hit")
-	object.free()
+
 	
