@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ctuhe6m4s22ed"]
+
+[node name="CardBase" type="MarginContainer"]
+offset_left = -9.0
+offset_right = 292.0
+offset_bottom = 407.0
