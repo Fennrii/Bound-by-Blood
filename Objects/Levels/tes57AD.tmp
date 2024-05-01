@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://ynoxbmq3q4su"]
+[gd_scene load_steps=21 format=3 uid="uid://ynoxbmq3q4su"]
 
 [ext_resource type="Texture2D" uid="uid://ijwjacrargad" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_t6yaq"]
+[ext_resource type="Script" path="res://Levels/maze_gen.gd" id="1_xl2wt"]
 [ext_resource type="PackedScene" uid="uid://qg1it1xna531" path="res://Characters/player.tscn" id="2_4wbt7"]
 [ext_resource type="PackedScene" uid="uid://cy7qvq37238dl" path="res://Characters/enemy.tscn" id="3_560h4"]
 [ext_resource type="PackedScene" uid="uid://cfx0dgisojxpp" path="res://Objects/hud.tscn" id="3_wuuae"]
@@ -1518,6 +1519,7 @@ pattern_10 = SubResource("TileMapPattern_a3k0b")
 pattern_11 = SubResource("TileMapPattern_e363v")
 
 [node name="TestLevel" type="Node2D"]
+script = ExtResource("1_xl2wt")
 
 [node name="MainTileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_8oiyl")
