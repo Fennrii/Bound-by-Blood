@@ -3,7 +3,7 @@
 # Eventinfo = [Type, Cost, Effect]
 enum {Footman, Archer, SquadLeader, Warrior, Guardian, Knight, Mercenary, Spearman, Mentor, Trebuchet}
 
-const DATA = {
+const Data = {
 	Footman : 
 		["Units", 1, 1, 2, 1, "Footman", "Melee"],
 	Archer :

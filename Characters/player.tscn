@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://qg1it1xna531"]
+[gd_scene load_steps=58 format=3 uid="uid://qg1it1xna531"]
 
 [ext_resource type="Texture2D" uid="uid://bv724kncgkevq" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="1_ktuwu"]
 [ext_resource type="Script" path="res://Characters/player.gd" id="1_o4aox"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dj8siqciicee8" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Character/Jump-Start/Jump-Start-Sheet.png" id="4_mcwgc"]
 [ext_resource type="Texture2D" uid="uid://f8dnxv8giwqx" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="5_8susj"]
 [ext_resource type="Texture2D" uid="uid://b4pp07axcshu5" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="6_btoco"]
+[ext_resource type="Script" path="res://Objects/Levels/Camera2D2.gd" id="7_8ecfv"]
+[ext_resource type="PackedScene" uid="uid://cfx0dgisojxpp" path="res://Objects/hud.tscn" id="7_ux8l6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g0l3p"]
 atlas = ExtResource("1_ktuwu")
@@ -387,5 +389,19 @@ offset = Vector2(-32, -40)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_1lq2h")
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
+position = Vector2(2, -12)
+remote_path = NodePath("../Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, -12)
+process_callback = 0
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("7_8ecfv")
+
+[node name="HUD" parent="Camera2D" instance=ExtResource("7_ux8l6")]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

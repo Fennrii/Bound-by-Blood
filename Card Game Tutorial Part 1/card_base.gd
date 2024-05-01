@@ -1,7 +1,7 @@
 extends MarginContainer
 
 #Delared member variables
-@onready var CardDatabase = preload("res://Assets/Cards/CardsDatabase.gd").new
+@onready var CardDatabase = preload("res://Assets/Cards/CardsDatabase.gd").new()
 var Cardname = 'Footman'
 @onready var CardInfo = CardDatabase.Data[CardDatabase.get(Cardname)]
 @onready var CardImg = str("res://Assets/Cards/",CardInfo[0],"/",Cardname,".png")

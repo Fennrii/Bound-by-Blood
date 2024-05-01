@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 @export var max_speed : float = 200.0
 @export var speed_mult : float = 10.0
-@export var jump_velocity : float = -200
+@export var jump_velocity : float = -250
 @export var double_jump_velocity : float = -200
 
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
@@ -18,6 +18,7 @@ var prev_wall_normal : Vector2 = Vector2.ZERO
 var direction_lock : bool = false
 var regex = RegEx.new()
 static var Inventory: Array = [[],[]]
+
 
 
 func _physics_process(delta):
@@ -40,7 +41,7 @@ func _physics_process(delta):
 	for i in get_slide_collision_count():
 		if get_slide_collision(i).get_collider() == null:
 			pass
-		elif get_slide_collision(i).get_collider().name.contains("Chest"):
+		elif get_slide_collision(i).get_collider().has_method("open_chest"):
 			add_inv_item(get_slide_collision(i).get_collider())
 		
 
