@@ -28,6 +28,7 @@ func continue_game():
 	get_tree().paused = false
 
 func restart_game():
+	Events.battle_over.emit()
 	hide()
 	free_node_tree(get_tree().root.get_node("/root/Battle"))
 	print(get_tree().current_scene)
