@@ -19,9 +19,21 @@ var direction_lock : bool = false
 var regex = RegEx.new()
 static var Inventory: Array = [[],[]]
 
+var in_battle = false
+func unPause():
+	in_battle = false
+	get_node("Camera2D").make_current()
 
-
+func pause():
+	in_battle = true
+	
+func _ready():
+	Events.battle_over.connect(unPause)
+	Events.pause_overworld.connect(pause)
+	
 func _physics_process(delta):
+	if in_battle:
+		return
 	
 	regex.compile("\\d+$")
 	# Add the gravity.

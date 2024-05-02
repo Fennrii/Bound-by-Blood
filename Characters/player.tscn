@@ -376,6 +376,7 @@ radius = 8.0
 height = 44.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+visibility_layer = 2
 floor_constant_speed = true
 script = ExtResource("1_o4aox")
 
