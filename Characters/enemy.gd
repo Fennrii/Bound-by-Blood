@@ -40,6 +40,7 @@ func _physics_process(delta):
 			pass
 		elif get_slide_collision(i).get_collider().has_method("jump"):
 			player_hit()
+			not_hit_player = false
 			await get_tree().create_timer(0.1).timeout
 		elif get_slide_collision(i).get_collider().has_method("open_chest"):
 			scale = Vector2(scale.x * -1,scale.y)
@@ -83,7 +84,6 @@ func turn_check():
 
 func player_hit():
 	if not_hit_player:
-		not_hit_player = false
 		var battleInst = battle.instantiate()
 		var currentNode = get_tree().current_scene
 		Events.pause_overworld.emit()
