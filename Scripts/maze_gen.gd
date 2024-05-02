@@ -81,6 +81,7 @@ func spawn_boss(pos:Vector2):
 	add_child(bossInst)
 	
 func make_maze():
+	get_tree().paused = false
 	MusicPlayer.play(music, true)
 	Map.clear()
 	loading_camera.loading_screen()
