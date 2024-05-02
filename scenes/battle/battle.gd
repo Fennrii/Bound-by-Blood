@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var char_stats: CharacterStats
-@export var music: AudioStream
+#@export var music: AudioStream
 
 @onready var battle_ui: BattleUI = $BattleUI
 @onready var player_handler: PlayerHandler = $PlayerHandler
@@ -32,7 +32,7 @@ func _ready() -> void:
 func start_battle(stats: CharacterStats) -> void:
 	get_node("Background/Camera2D").make_current()
 	get_tree().paused = false
-	MusicPlayer.play(music, true)
+	#MusicPlayer.play(music, true)
 	enemy_handler.reset_enemy_actions()
 	player_handler.start_battle(stats)
 

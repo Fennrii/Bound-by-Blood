@@ -24,19 +24,13 @@ func show_screen(text: String, type: Type) -> void:
 func continue_game():
 	Events.battle_over.emit()
 	hide()
-	free_node_tree(get_tree().root.get_node("/root/Battle"))
+	get_tree().root.get_node("/root/Battle").queue_free()
 	get_tree().paused = false
 
 func restart_game():
 	Events.battle_over.emit()
 	hide()
-	free_node_tree(get_tree().root.get_node("/root/Battle"))
+	get_tree().root.get_node("/root/Battle").queue_free()
 	print(get_tree().current_scene)
 	get_tree().reload_current_scene()
 	get_tree().paused = false
-	
-func free_node_tree(tree):
-	for child in tree.get_children():
-		if child.get_children:
-			free_node_tree(child)
-		child.queue_free()
