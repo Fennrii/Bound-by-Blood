@@ -5,6 +5,7 @@ extends CharacterBody2D
 #const JUMP_VELOCITY = -400.0
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var floor_ray : RayCast2D = $FloorRay
+@onready var battle = preload("res://scenes/battle/battle.tscn")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var animation_locked : bool = false
@@ -14,9 +15,16 @@ var able_to_move : bool = true
 var turn_timer : int = 0
 var face_left : bool = true
 
+var not_hit_player = true
+var in_battle = false
 
+func _ready():
+	Events.battle_over.connect(unPause)
+	Events.pause_overworld.connect(pause)
 
 func _physics_process(delta):
+	if in_battle:
+		return
 	# Add the gravity.
 	if not is_on_floor_only():
 		velocity.y += gravity * delta
@@ -49,6 +57,13 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animation()
+		
+
+func unPause():
+	in_battle = false
+
+func pause():
+	in_battle = true
 	
 # Checks to see if movement is viable
 func floor_check():
@@ -67,8 +82,14 @@ func turn_check():
 		#turn_timer = turn_timer -1
 
 func player_hit():
-	print("Enemy on-hit")
-	queue_free()
+	if not_hit_player:
+		not_hit_player = !not_hit_player
+		var battleInst = battle.instantiate()
+		var currentNode = get_tree().current_scene
+		Events.pause_overworld.emit()
+		currentNode.add_sibling(battleInst)
+		await Events.battle_over
+		queue_free()
 	
 func update_animation():
 	if not animation_locked:
@@ -82,3 +103,8 @@ func update_animation():
 				
 		
 
+func free_node_tree(tree):
+	for child in tree.get_children():
+		if child.get_children:
+			free_node_tree(child)
+		child.queue_free()

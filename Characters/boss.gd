@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 
 @export var speed : float = 0
-#const JUMP_VELOCITY = -400.0
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var battle = preload("res://scenes/battle/battle.tscn")
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var animation_locked : bool = false
@@ -12,10 +12,22 @@ var floor_in_front : bool = true
 var able_to_move : bool = true
 var turn_timer : int = 0
 var face_left : bool = true
+var not_hit_player = true
+var in_battle = false
 
+func unPause():
+	in_battle = false
 
+func pause():
+	in_battle = true
 
+func _ready():
+	Events.battle_over.connect(unPause)
+	Events.pause_overworld.connect(pause)
 func _physics_process(delta):
+	
+	if in_battle:
+		return
 	# Add the gravity.
 	if not is_on_floor_only():
 		velocity.y += gravity * delta
@@ -45,10 +57,16 @@ func _physics_process(delta):
 
 
 func player_hit():
-	print("Boss on-hit")
-	for i in get_tree().root.get_children()[0].get_children():
-		if i.has_method("floor_check") or i.has_method("open_chest") or i.has_method("jump"):
-			i.queue_free()
-	get_tree().root.get_children()[0].make_maze()
-	get_tree().root.get_children()[0].find_child("Camera2D2").find_child("HUD").show_message("Level Complete!")
-	queue_free()
+	if not_hit_player:
+		not_hit_player = !not_hit_player
+		var battleInst = battle.instantiate()
+		var currentNode = get_tree().current_scene
+		Events.pause_overworld.emit()
+		currentNode.add_sibling(battleInst)
+		await Events.battle_over
+		for i in get_tree().root.get_node("/root/Level").get_children():
+			if i.has_method("floor_check") or i.has_method("open_chest") or i.has_method("jump"):
+				i.queue_free()
+		get_tree().root.get_node("/root/Level").make_maze()
+		get_tree().root.get_node("/root/Level").find_child("Camera2D2").find_child("HUD").show_message("Level Complete!")
+		queue_free()

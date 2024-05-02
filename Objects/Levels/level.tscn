@@ -1,7 +1,8 @@
-[gd_scene load_steps=36 format=3 uid="uid://ynoxbmq3q4su"]
+[gd_scene load_steps=37 format=3 uid="uid://ynoxbmq3q4su"]
 
 [ext_resource type="Script" path="res://Scripts/maze_gen.gd" id="1_le0xb"]
 [ext_resource type="Texture2D" uid="uid://ijwjacrargad" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="2_2b8hk"]
+[ext_resource type="AudioStream" uid="uid://dpdenqqbovwfq" path="res://art/8_bit_iced_village_lofi.mp3" id="2_bbjey"]
 [ext_resource type="Script" path="res://Objects/Levels/Camera2D2.gd" id="3_dl2pj"]
 [ext_resource type="Texture2D" uid="uid://mb0ylbwin834" path="res://DungeonCrawl-Art/Placeholder-Art/Legacy-Fantasy - High Forest 2.3/Background/Background.png" id="4_007wk"]
 [ext_resource type="PackedScene" uid="uid://cfx0dgisojxpp" path="res://Objects/hud.tscn" id="4_p0x15"]
@@ -1584,8 +1585,10 @@ pattern_27 = SubResource("TileMapPattern_hruqf")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_le0xb")
+music = ExtResource("2_bbjey")
 
 [node name="TileMap" type="TileMap" parent="."]
+visibility_layer = 2
 tile_set = SubResource("TileSet_k82gn")
 format = 2
 layer_0/name = "Ground"

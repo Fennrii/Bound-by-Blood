@@ -19,12 +19,17 @@ var chest = preload("res://Objects/chest.tscn")
 var mob = preload("res://Characters/enemy.tscn")
 var boss = preload("res://Characters/boss.tscn")
 
+
+@export var music: AudioStream
 @onready var Map = $TileMap
 @onready var Set = Map.tile_set
 @onready var loading_camera = $Camera2D2
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	
 	randomize()
 	make_maze()
 
@@ -76,6 +81,7 @@ func spawn_boss(pos:Vector2):
 	add_child(bossInst)
 	
 func make_maze():
+	MusicPlayer.play(music, true)
 	Map.clear()
 	loading_camera.loading_screen()
 	var edges = []

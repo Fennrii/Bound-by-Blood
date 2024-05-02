@@ -139,6 +139,7 @@ animations = [{
 }]
 
 [node name="Enemy" type="CharacterBody2D"]
+visibility_layer = 2
 script = ExtResource("1_oa3wl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
